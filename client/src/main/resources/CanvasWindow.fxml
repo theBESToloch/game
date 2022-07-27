@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.ScrollPane?>
+
+<ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ru.cheatbattle.client.UIControllers.CanvasWindowController"
+            onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased">
+    <content>
+        <Canvas fx:id="canvas"/>
+    </content>
+</ScrollPane>
