@@ -14,6 +14,7 @@ import ru.cheatbattle.client.data.Game;
 import java.net.URL;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.ResourceBundle;
 
 @Slf4j
@@ -28,7 +29,7 @@ public class CanvasWindowController implements Initializable {
 
     public CanvasWindowController(Game game) {
         this.game = game;
-        this.currentEntity = game.getCurrentEntities();
+        this.currentEntity = game.getCurrentEntity();
     }
 
     private LocalTime first = LocalTime.now();
@@ -49,10 +50,10 @@ public class CanvasWindowController implements Initializable {
         thread.start();
     }
 
-    private boolean up = false;
-    private boolean down = false;
-    private boolean left = false;
-    private boolean right = false;
+    private volatile boolean up = false;
+    private volatile boolean down = false;
+    private volatile boolean left = false;
+    private volatile boolean right = false;
 
     public void onKeyPressed(KeyEvent keyEvent) {
         log.info("pressed {}", keyEvent.getCode());
@@ -96,10 +97,17 @@ public class CanvasWindowController implements Initializable {
         graphicsContext2D.setFill(Color.WHITE);
         graphicsContext2D.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-        Entity entity = game.getCurrentEntities();
-
+        Entity currentEntity = game.getCurrentEntity();
         graphicsContext2D.setFill(Color.BLACK);
-        graphicsContext2D.fillOval(entity.getX() - RADIUS, entity.getY() - RADIUS, RADIUS * 2, RADIUS * 2);
+        graphicsContext2D.fillOval(currentEntity.getX() - RADIUS, currentEntity.getY() - RADIUS, RADIUS * 2, RADIUS * 2);
+
+        List<Entity> entities = game.getEntities();
+        entities.forEach(e -> {
+            if (!e.getUuid().equals(currentEntity.getUuid())) {
+                graphicsContext2D.setFill(Color.BLUE);
+                graphicsContext2D.fillOval(e.getX() - RADIUS, e.getY() - RADIUS, RADIUS * 2, RADIUS * 2);
+            }
+        });
     }
 
 }

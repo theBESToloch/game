@@ -9,9 +9,9 @@ import ru.cheatbattle.client.data.Game;
 public class GameContext {
 
     @Bean
-    public Game game(Entity entities) {
+    public Game game(Entity entity) {
         Game game = new Game();
-        game.setCurrentEntities(entities);
+        game.setCurrentEntity(entity);
 
         return game;
     }

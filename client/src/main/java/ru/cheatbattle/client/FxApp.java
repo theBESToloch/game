@@ -6,8 +6,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.SplitPane;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -47,7 +45,7 @@ public class FxApp extends Application {
 
     @Override
     public void init() {
-        applicationContext = new SpringApplicationBuilder(ru.cheatbattle.client.Application.class).run();
+        applicationContext = new SpringApplicationBuilder(ClientApplication.class).run();
     }
 
     @Override
