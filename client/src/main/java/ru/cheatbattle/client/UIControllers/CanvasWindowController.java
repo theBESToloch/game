@@ -1,5 +1,6 @@
 package ru.cheatbattle.client.UIControllers;
 
+import javafx.animation.AnimationTimer;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -13,7 +14,7 @@ import ru.cheatbattle.client.data.Game;
 
 import java.net.URL;
 import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -32,22 +33,16 @@ public class CanvasWindowController implements Initializable {
         this.currentEntity = game.getCurrentEntity();
     }
 
-    private LocalTime first = LocalTime.now();
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Thread thread = new Thread(() -> {
-            while (true) {
-                LocalTime second = LocalTime.now();
-                long between = ChronoUnit.MILLIS.between(first, second);
-                if (between > (1000 / 60)) {
-                    updateCanvas();
-                    first = second;
-                }
+        AnimationTimer animationTimer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                updateCanvas();
             }
-        });
-        thread.setDaemon(true);
-        thread.start();
+        };
+
+        animationTimer.start();
     }
 
     private volatile boolean up = false;
