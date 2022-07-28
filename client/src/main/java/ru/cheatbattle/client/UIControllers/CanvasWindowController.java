@@ -38,6 +38,7 @@ public class CanvasWindowController implements Initializable {
         AnimationTimer animationTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
+                calculate();
                 updateCanvas();
             }
         };
@@ -86,7 +87,6 @@ public class CanvasWindowController implements Initializable {
     }
 
     private void updateCanvas() {
-        calculate();
 
         GraphicsContext graphicsContext2D = canvas.getGraphicsContext2D();
         graphicsContext2D.setFill(Color.WHITE);
