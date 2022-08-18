@@ -1,14 +1,12 @@
-package ru.cheatbattle.client.services;
+package ru.cheatbattle.client.services.connection;
 
 import java.io.IOException;
 
-public interface TransportService {
-    void connect() throws IOException;
+public interface ConnectionWorker {
 
     void sendLine(String line) throws IOException;
 
     String readLine() throws IOException;
 
     void close() throws IOException;
-
 }

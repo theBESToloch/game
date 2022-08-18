@@ -13,8 +13,6 @@ import ru.cheatbattle.client.data.Entity;
 import ru.cheatbattle.client.data.Game;
 
 import java.net.URL;
-import java.time.LocalTime;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -98,7 +96,7 @@ public class CanvasWindowController implements Initializable {
 
         List<Entity> entities = game.getEntities();
         entities.forEach(e -> {
-            if (!e.getUuid().equals(currentEntity.getUuid())) {
+            if (!currentEntity.getUuid().equals(e.getUuid())) {
                 graphicsContext2D.setFill(Color.BLUE);
                 graphicsContext2D.fillOval(e.getX() - RADIUS, e.getY() - RADIUS, RADIUS * 2, RADIUS * 2);
             }

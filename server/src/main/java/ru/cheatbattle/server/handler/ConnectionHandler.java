@@ -8,17 +8,16 @@ import java.io.IOException;
 
 @Slf4j
 public class ConnectionHandler {
-    private final Connection connection;
+    private Connection connection;
     private final GameHandler gameHandler;
     private final ObjectMapper objectMapper;
 
-    public ConnectionHandler(Connection connection, GameHandler gameHandler) {
-        this.connection = connection;
+    public ConnectionHandler(GameHandler gameHandler) {
         this.gameHandler = gameHandler;
         this.objectMapper = new ObjectMapper();
     }
 
-    public void handle() {
+    private void handle() {
         Thread thread = new Thread(() -> {
             while (true) {
                 try {
@@ -32,6 +31,15 @@ public class ConnectionHandler {
         });
         thread.setDaemon(true);
         thread.start();
+    }
+
+    public void registerConnection(Connection connection) throws IOException {
+        this.connection = connection;
+
+        Entity entity = objectMapper.readValue(connection.readLine(), Entity.class);
+        gameHandler.addEntity(entity);
+
+        handle();
     }
 
     public void stop() throws IOException {
