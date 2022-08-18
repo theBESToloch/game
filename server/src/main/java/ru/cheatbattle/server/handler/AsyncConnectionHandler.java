@@ -1,9 +1,7 @@
 package ru.cheatbattle.server.handler;
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import ru.cheatbattle.server.data.Entity;
 
 import java.io.IOException;
 
@@ -12,34 +10,26 @@ public class AsyncConnectionHandler {
 
     private final ServerSocketHandler serverSocketHandler;
     private final GameHandler gameHandler;
-    private final ObjectMapper objectMapper;
-
-    public AsyncConnectionHandler(ServerSocketHandler serverSocketHandler,
-                                  GameHandler gameHandler) {
+    public AsyncConnectionHandler(ServerSocketHandler serverSocketHandler, GameHandler gameHandler) {
         this.serverSocketHandler = serverSocketHandler;
         this.gameHandler = gameHandler;
-        this.objectMapper = new ObjectMapper();
     }
 
     public void handle() throws IOException {
-        while (true) {
             Connection connection = serverSocketHandler.accept();
-            registerEntity(connection);
-            ConnectionHandler handler = new ConnectionHandler(connection, gameHandler);
-            handler.handle();
-            serverSocketHandler.addConnectionHandler(handler);
-        }
+            registerConnection(connection);
     }
 
-    private void registerEntity(Connection connection) throws IOException {
-        Entity entity = objectMapper.readValue(connection.readLine(), Entity.class);
-        gameHandler.addEntity(entity);
+    private void registerConnection(Connection connection) throws IOException {
+        new ConnectionHandler(gameHandler).registerConnection(connection);
     }
 
     public void asyncHandle() {
         Thread thread = new Thread(() -> {
             try {
-                handle();
+                while (true) {
+                    handle();
+                }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

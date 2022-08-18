@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Configuration;
 import ru.cheatbattle.client.data.Entity;
 import ru.cheatbattle.client.data.Game;
 
+import java.util.UUID;
+
 @Configuration
 public class GameContext {
 
@@ -19,6 +21,7 @@ public class GameContext {
     @Bean
     public Entity myEntity() {
         return new Entity()
+                .setUuid(UUID.randomUUID())
                 .setX(100)
                 .setY(100);
     }

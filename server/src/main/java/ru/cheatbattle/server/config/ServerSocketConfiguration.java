@@ -19,8 +19,7 @@ public class ServerSocketConfiguration {
     }
 
     @Bean
-    public AsyncConnectionHandler asyncConnectionHandler(ServerSocketHandler serverSocketHandler,
-                                                         GameHandler gameHandler) {
+    public AsyncConnectionHandler asyncConnectionHandler(ServerSocketHandler serverSocketHandler, GameHandler gameHandler) {
         AsyncConnectionHandler asyncConnectionHandler = new AsyncConnectionHandler(serverSocketHandler, gameHandler);
         asyncConnectionHandler.asyncHandle();
         return asyncConnectionHandler;
