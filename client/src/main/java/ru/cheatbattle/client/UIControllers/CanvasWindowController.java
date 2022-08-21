@@ -5,6 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,8 @@ public class CanvasWindowController implements Initializable {
     private final Game game;
     private final Entity currentEntity;
 
+    private Image[] i;
+
     public CanvasWindowController(Game game) {
         this.game = game;
         this.currentEntity = game.getCurrentEntity();
@@ -33,6 +36,10 @@ public class CanvasWindowController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        i = new Image[3];
+        i[0] = new Image("obj1-f1.png", 64, 64, false, false);
+        i[1] = new Image("obj1-f2.png", 64, 64, false, false);
+        i[2] = new Image("obj1-f3.png", 64, 64, false, false);
         AnimationTimer animationTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
@@ -71,16 +78,16 @@ public class CanvasWindowController implements Initializable {
 
     private void calculate() {
         if (up) {
-            currentEntity.setY(currentEntity.getY() - 1);
+            currentEntity.setY(currentEntity.getY() - 5);
         }
         if (down) {
-            currentEntity.setY(currentEntity.getY() + 1);
+            currentEntity.setY(currentEntity.getY() + 5);
         }
         if (left) {
-            currentEntity.setX(currentEntity.getX() - 1);
+            currentEntity.setX(currentEntity.getX() - 5);
         }
         if (right) {
-            currentEntity.setX(currentEntity.getX() + 1);
+            currentEntity.setX(currentEntity.getX() + 5);
         }
     }
 
@@ -91,8 +98,8 @@ public class CanvasWindowController implements Initializable {
         graphicsContext2D.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
         Entity currentEntity = game.getCurrentEntity();
-        graphicsContext2D.setFill(Color.BLACK);
-        graphicsContext2D.fillOval(currentEntity.getX() - RADIUS, currentEntity.getY() - RADIUS, RADIUS * 2, RADIUS * 2);
+        graphicsContext2D.drawImage(getFrame(), currentEntity.getX(), currentEntity.getY());
+
 
         List<Entity> entities = game.getEntities();
         entities.forEach(e -> {
@@ -101,6 +108,25 @@ public class CanvasWindowController implements Initializable {
                 graphicsContext2D.fillOval(e.getX() - RADIUS, e.getY() - RADIUS, RADIUS * 2, RADIUS * 2);
             }
         });
+    }
+
+    private int currentFrame = 0;
+    private byte frame = 0;
+
+    private Image getFrame() {
+        if (frame != 4) {
+            frame++;
+            return i[currentFrame];
+        }
+        if (!up && !down && !left && !right) {
+            currentFrame = 0;
+        } else if (currentFrame == 0 || currentFrame == 2) {
+            currentFrame = 1;
+        } else {
+            currentFrame = 2;
+        }
+        frame = 0;
+        return i[currentFrame];
     }
 
 }
