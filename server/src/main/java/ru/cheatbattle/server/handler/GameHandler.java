@@ -4,12 +4,11 @@ import ru.cheatbattle.server.data.Entity;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 public class GameHandler {
-    Map<UUID, Entity> entityMap;
+    private final Map<UUID, Entity> entityMap;
 
     public GameHandler() {
         entityMap = new HashMap<>();
