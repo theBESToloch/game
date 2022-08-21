@@ -42,4 +42,8 @@ public class Connection {
         socket.close();
     }
 
+    public Socket getSocket() {
+        return socket;
+    }
+
 }

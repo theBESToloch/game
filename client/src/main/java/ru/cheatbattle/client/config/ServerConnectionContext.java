@@ -24,7 +24,7 @@ import java.util.Optional;
 @EnableScheduling
 public class ServerConnectionContext {
     private final static String SERVER_IP = "127.0.0.1";
-    private final static int SERVER_PORT = 8000;
+    private final static int SERVER_PORT = 80;
 
     @Autowired
     private ServerConnectionService connectionService;
