@@ -7,7 +7,7 @@ public class ServerSocketHandler {
     private ServerSocket serverSocket;
 
     public void start() throws IOException {
-        this.serverSocket = new ServerSocket(8000);
+        this.serverSocket = new ServerSocket(80);
     }
 
     public Connection accept() throws IOException {
